@@ -1,0 +1,1660 @@
+<!doctype html>
+<meta charset="UTF-8" />
+<style>
+  html.st-hypnoos-identity-port {
+    --st-identity-port-vh: 100dvh;
+    --st-identity-port-width: 100vw;
+  }
+
+  html.st-hypnoos-identity-port,
+  html.st-hypnoos-identity-port body {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: var(--st-identity-port-vh, 100dvh) !important;
+    min-height: 0 !important;
+    max-height: var(--st-identity-port-vh, 100dvh) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #3f2619 !important;
+  }
+
+  html.st-hypnoos-identity-port body {
+    position: relative !important;
+    touch-action: manipulation;
+    overscroll-behavior: none;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  html.st-hypnoos-identity-port #st-hypnoos-identity-frontend-host,
+  html.st-hypnoos-identity-port #identityRoot {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 2147483000 !important;
+    display: block !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: var(--st-identity-port-vh, 100dvh) !important;
+    min-height: 0 !important;
+    max-height: var(--st-identity-port-vh, 100dvh) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    transform: none !important;
+    clip-path: none !important;
+    contain: none !important;
+  }
+
+  html.st-hypnoos-identity-port .mes,
+  html.st-hypnoos-identity-port .mes_block,
+  html.st-hypnoos-identity-port .mes_text {
+    max-width: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    contain: none !important;
+    transform: none !important;
+  }
+
+  .identity-root {
+    --desk-ink: #33291f;
+    --paper: #f7f1e5;
+    --paper-2: #fff8ea;
+    --line: rgba(81, 64, 49, 0.25);
+    --seal: #803727;
+    --gold: #d9b15a;
+    --green: #2f6d62;
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+    color: var(--desk-ink);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+    background:
+      radial-gradient(circle at 22% 10%, rgba(255, 238, 184, 0.18), transparent 31%),
+      linear-gradient(135deg, #6f4428, #3f2619 58%, #21140e);
+  }
+
+  .identity-root,
+  .identity-root * {
+    box-sizing: border-box;
+    letter-spacing: 0;
+  }
+
+  .identity-root button,
+  .identity-root input,
+  .identity-root select,
+  .identity-root textarea {
+    font: inherit;
+  }
+
+  .identity-root button {
+    cursor: pointer;
+  }
+
+  .identity-root [hidden] {
+    display: none !important;
+  }
+
+  .identity-detail-screen {
+    position: absolute;
+    inset: 0;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .identity-detail-screen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(110deg, rgba(255, 255, 255, 0.045), transparent 44%),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.026) 0 2px, transparent 2px 32px);
+    pointer-events: none;
+  }
+
+  .identity-notice-toggle {
+    position: absolute;
+    z-index: 8;
+    right: clamp(12px, 3vw, 28px);
+    top: clamp(12px, 3vw, 26px);
+    min-height: 32px;
+    max-width: min(56vw, 250px);
+    border: 1px solid rgba(255, 236, 176, 0.34);
+    border-radius: 999px;
+    background: rgba(247, 241, 229, 0.22);
+    color: #fff8ed;
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 950;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-shadow:
+      0 8px 20px rgba(24, 14, 9, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(3px);
+  }
+
+  .identity-notice-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: grid;
+    place-items: center;
+    padding: clamp(16px, 4vw, 38px);
+    background: rgba(33, 20, 14, 0.56);
+    backdrop-filter: blur(3px);
+  }
+
+  .identity-notice-card {
+    width: min(100%, 520px);
+    max-height: min(82dvh, 640px);
+    overflow: auto;
+    border: 1px solid rgba(255, 236, 176, 0.34);
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 248, 234, 0.96), rgba(247, 241, 229, 0.96));
+    color: #33291f;
+    padding: 16px;
+    box-shadow:
+      0 22px 50px rgba(24, 14, 9, 0.48),
+      inset 0 0 0 2px rgba(255, 255, 255, 0.42);
+    display: grid;
+    gap: 10px;
+    font-family: 'Songti SC', 'STSong', 'Noto Serif SC', serif;
+  }
+
+  .identity-notice-card h2 {
+    margin: 0;
+    color: #403126;
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 950;
+  }
+
+  .identity-notice-card p {
+    margin: 0;
+    color: rgba(68, 54, 42, 0.78);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.55;
+    white-space: pre-wrap;
+  }
+
+  .identity-notice-card strong {
+    color: #803727;
+    font-weight: 950;
+  }
+
+  .identity-notice-card ul {
+    margin: 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 4px;
+    color: rgba(68, 54, 42, 0.78);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.45;
+  }
+
+  .identity-notice-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 4px;
+  }
+
+  .identity-detail-screen {
+    display: grid;
+    place-items: center;
+    padding: clamp(38px, 5vw, 70px) clamp(12px, 4vw, 46px) clamp(20px, 4vw, 42px);
+    overflow: auto;
+  }
+
+  .identity-back {
+    position: absolute;
+    z-index: 5;
+    left: clamp(12px, 3vw, 28px);
+    top: clamp(12px, 3vw, 26px);
+    min-height: 32px;
+    border: 1px solid rgba(247, 241, 229, 0.22);
+    border-radius: 999px;
+    background: rgba(247, 241, 229, 0.2);
+    color: #fff8ed;
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 950;
+    box-shadow:
+      0 8px 20px rgba(24, 14, 9, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(3px);
+  }
+
+  .identity-booklet {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 920px);
+    min-height: min(76vh, 600px);
+    display: grid;
+    grid-template-columns: minmax(270px, 0.9fr) minmax(320px, 1.1fr);
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+    filter: drop-shadow(0 18px 35px rgba(24, 14, 9, 0.36));
+  }
+
+  .identity-booklet::before,
+  .identity-booklet::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  .identity-booklet::before {
+    width: 18px;
+    background: linear-gradient(90deg, rgba(81, 64, 49, 0.12), transparent 45%, rgba(81, 64, 49, 0.1));
+  }
+
+  .identity-booklet::after {
+    width: 1px;
+    background: rgba(81, 64, 49, 0.32);
+  }
+
+  .identity-page {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    display: grid;
+    align-content: start;
+    gap: 13px;
+    border: 1px solid rgba(81, 64, 49, 0.32);
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0.52), transparent 18%, transparent 82%, rgba(81, 64, 49, 0.06)),
+      var(--paper);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.32);
+    padding: clamp(16px, 2.5vw, 26px);
+    font-family: 'Songti SC', 'STSong', 'Noto Serif SC', serif;
+  }
+
+  .identity-page-left {
+    border-radius: 6px 0 0 6px;
+    border-right: 0;
+    z-index: 2;
+    box-shadow:
+      inset -14px 0 18px rgba(81, 64, 49, 0.08),
+      inset 0 0 0 2px rgba(255, 255, 255, 0.32);
+  }
+
+  .identity-page-right {
+    border-radius: 0 6px 6px 0;
+    border-left: 0;
+    z-index: 1;
+    padding-left: clamp(26px, 4vw, 38px);
+    box-shadow:
+      inset 14px 0 18px rgba(81, 64, 49, 0.08),
+      inset 0 0 0 2px rgba(255, 255, 255, 0.32);
+  }
+
+  .identity-page-left::after,
+  .identity-page-right::before {
+    display: none;
+  }
+
+  .identity-page-head {
+    display: grid;
+    gap: 4px;
+    text-align: center;
+  }
+
+  .identity-page-head small {
+    color: rgba(81, 64, 49, 0.62);
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .identity-page-head strong {
+    color: #403126;
+    font-size: clamp(23px, 3vw, 34px);
+    line-height: 1.05;
+    font-weight: 950;
+  }
+
+  .identity-photo-preview {
+    width: min(100%, 230px);
+    aspect-ratio: 4 / 5;
+    justify-self: center;
+    border: 3px double rgba(81, 64, 49, 0.45);
+    background: #eee8dc;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    box-shadow: 0 5px 14px rgba(80, 64, 48, 0.16);
+  }
+
+  .identity-photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .identity-photo-preview span {
+    color: rgba(68, 54, 42, 0.42);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .identity-photo-actions,
+  .identity-actions,
+  .identity-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .identity-fields {
+    display: grid;
+    gap: 10px;
+  }
+
+  .identity-perks {
+    display: grid;
+    gap: 6px;
+    border: 1px solid rgba(112, 84, 58, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 248, 234, 0.52);
+    padding: 8px;
+  }
+
+  .identity-perks-title {
+    color: rgba(62, 45, 32, 0.68);
+    font-size: 11px;
+    font-weight: 900;
+    line-height: 1.2;
+  }
+
+  .identity-perk {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 7px;
+    align-items: start;
+    border: 1px solid rgba(112, 84, 58, 0.12);
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.44);
+    padding: 6px 7px;
+  }
+
+  .identity-perk input {
+    width: 16px;
+    height: 16px;
+    margin: 2px 0 0;
+    accent-color: #8f4d2b;
+  }
+
+  .identity-perk strong {
+    display: block;
+    color: #3e2d20;
+    font-size: 12px;
+    font-weight: 950;
+    line-height: 1.25;
+  }
+
+  .identity-perk small {
+    display: block;
+    color: rgba(62, 45, 32, 0.58);
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.35;
+    margin-top: 1px;
+  }
+
+  .identity-field {
+    display: grid;
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+    min-width: 0;
+    border-bottom: 1px dashed rgba(81, 64, 49, 0.32);
+    padding-bottom: 7px;
+  }
+
+  .identity-field span {
+    color: #403126;
+    font-size: 13px;
+    font-weight: 950;
+    line-height: 32px;
+    white-space: nowrap;
+  }
+
+  .identity-field input,
+  .identity-field select,
+  .identity-field textarea {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid rgba(81, 64, 49, 0.18);
+    border-radius: 6px;
+    background: rgba(255, 251, 241, 0.72);
+    color: #30261d;
+    padding: 7px 9px;
+    outline: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.52);
+  }
+
+  .identity-field input,
+  .identity-field select {
+    min-height: 32px;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .identity-field textarea {
+    min-height: 132px;
+    resize: vertical;
+    font-size: 13px;
+    font-weight: 750;
+    line-height: 1.45;
+  }
+
+  .identity-field input:focus,
+  .identity-field select:focus,
+  .identity-field textarea:focus {
+    border-color: rgba(128, 55, 43, 0.44);
+    box-shadow:
+      0 0 0 3px rgba(128, 55, 43, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.52);
+  }
+
+  .identity-button {
+    min-width: 0;
+    min-height: 32px;
+    border: 1px solid rgba(81, 64, 49, 0.22);
+    border-radius: 7px;
+    padding: 7px 10px;
+    color: rgba(68, 54, 42, 0.82);
+    background: rgba(255, 251, 241, 0.66);
+    font-size: 12px;
+    font-weight: 950;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  }
+
+  .identity-button.primary {
+    border-color: rgba(47, 109, 98, 0.44);
+    color: #fff8ed;
+    background: #2f6d62;
+    box-shadow:
+      0 8px 18px rgba(47, 109, 98, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+
+  .identity-button:disabled {
+    opacity: 0.62;
+    cursor: progress;
+  }
+
+  .identity-status {
+    min-width: 0;
+    color: rgba(68, 54, 42, 0.64);
+    font-size: 11px;
+    font-weight: 850;
+    line-height: 1.45;
+  }
+
+  .identity-footer {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    border-top: 1px solid rgba(81, 64, 49, 0.18);
+    padding-top: 10px;
+  }
+
+  .identity-hidden {
+    display: none !important;
+  }
+
+  @media (max-width: 780px) {
+    .identity-root {
+      overflow: auto;
+    }
+
+    .identity-notice-toggle {
+      max-width: 45vw;
+      min-height: 28px;
+      padding: 0 9px;
+      font-size: 10px;
+    }
+
+    .identity-notice-card {
+      padding: 13px;
+    }
+
+    .identity-notice-card h2 {
+      font-size: 17px;
+    }
+
+    .identity-notice-card p,
+    .identity-notice-card ul {
+      font-size: 12px;
+    }
+
+    .identity-detail-screen {
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 54px 12px 24px;
+      display: grid;
+      place-items: center;
+    }
+
+    .identity-booklet {
+      width: min(100%, 700px);
+      min-height: 0;
+      margin: 0 auto;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .identity-page-left {
+      padding: clamp(10px, 2.4vw, 16px);
+    }
+
+    .identity-page-right {
+      padding: clamp(10px, 2.4vw, 16px);
+      padding-left: clamp(24px, 5vw, 30px);
+    }
+
+    .identity-page-head {
+      gap: 2px;
+    }
+
+    .identity-page-head small {
+      font-size: 10px;
+    }
+
+    .identity-page-head strong {
+      font-size: clamp(18px, 4.8vw, 24px);
+    }
+
+    .identity-photo-preview {
+      width: min(100%, 168px);
+    }
+
+    .identity-photo-actions,
+    .identity-actions {
+      gap: 5px;
+    }
+
+    .identity-field {
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 5px;
+      padding-bottom: 5px;
+    }
+
+    .identity-field span {
+      font-size: 10px;
+      line-height: 27px;
+    }
+
+    .identity-field input,
+    .identity-field select {
+      min-height: 27px;
+      padding: 5px 6px;
+      font-size: 12px;
+    }
+
+    .identity-field textarea {
+      min-height: 90px;
+      padding: 6px;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .identity-button {
+      min-height: 28px;
+      padding: 5px 6px;
+      font-size: 10px;
+    }
+
+    .identity-status {
+      font-size: 10px;
+    }
+
+    .identity-footer {
+      gap: 6px;
+    }
+  }
+</style>
+
+<main class="identity-root" id="identityRoot">
+  <button
+    class="identity-notice-toggle"
+    type="button"
+    id="identityNoticeToggle"
+    title="本卡完全免费且为社区大家共同努力的结果"
+  >
+    须知 · 本卡完全免费
+  </button>
+  <section class="identity-notice-layer" id="identityNoticeLayer" aria-label="须知" hidden>
+    <article class="identity-notice-card" role="dialog" aria-modal="true" aria-labelledby="identityNoticeTitle">
+      <h2 id="identityNoticeTitle">本卡完全免费且为社区大家共同努力的结果</h2>
+      <p><strong>原作者：</strong>Ramiel；本版本为个人二改与前端重构版。 <strong>本卡作者：</strong>louisHM</p>
+      <p>后续 @SDZ_aser 的数据库版本大家也可以期待</p>
+      <p><strong>使用到的各位大佬的世界书</strong></p>
+      <ul>
+        <li>@orjenrn大佬</li>
+        <li>@WangFeng 大佬</li>
+        <li>@Akashi Maho 大佬</li>
+        <li>@SDZ_aser 大佬</li>
+        <li>@白楷 大佬</li>
+      </ul>
+      <p><strong>世界书建议</strong></p>
+      <p>@白楷 @eric @qyqy @YKWIM 等大佬们</p>
+      <p><strong>帮忙测试</strong></p>
+      <p>
+        @weiaolantei @黑白 @豆腐仙贝 @法拉姆 @E·HERO @mml @哈哈 @YOYO @٩(๑^o^๑)۶ @Prototype System @v @纸小虎
+        @达尔文是个猩猩 @你是黄金奖杯 @墨玖 @刘培茄 @听雪 @Shadtion @米奇喵喵屋 @mimimi @meiya @ChuiXue_YouYue
+        @🌒PackeTail-V4-Flash-Lite℠🍑 @sb @New_JanZ @烈火 @himi @Nkkkk @Sxwda @朔风 @圣女别回头我是阿不思 等大佬们
+      </p>
+      <div class="identity-notice-actions">
+        <button class="identity-button primary" type="button" id="identityNoticeClose">知道了</button>
+      </div>
+    </article>
+  </section>
+
+  <section class="identity-detail-screen" id="identityDetailScreen" aria-label="学生证详情">
+    <div class="identity-booklet">
+      <section class="identity-page identity-page-left">
+        <div class="identity-page-head">
+          <small>私立斋明学园</small>
+          <strong>学生证</strong>
+        </div>
+        <div class="identity-photo-preview" id="identityPhotoPreview"><span>照片为空</span></div>
+        <div class="identity-photo-actions">
+          <button class="identity-button" type="button" id="identityUpload">上传照片</button>
+          <button class="identity-button" type="button" id="identityToggleDefaultPhoto">切换头像</button>
+          <button class="identity-button" type="button" id="identityClearPhoto">清空</button>
+          <input class="identity-hidden" id="identityPhotoInput" type="file" accept="image/*" />
+        </div>
+      </section>
+
+      <section class="identity-page identity-page-right">
+        <div class="identity-page-head"></div>
+        <div class="identity-fields">
+          <label class="identity-field">
+            <span>姓名</span>
+            <input id="identityName" autocomplete="off" />
+          </label>
+          <label class="identity-field">
+            <span>年龄</span>
+            <input id="identityAge" inputmode="numeric" autocomplete="off" />
+          </label>
+          <label class="identity-field">
+            <span>性别</span>
+            <select id="identityGender">
+              <option value="女">女</option>
+              <option value="男">男</option>
+              <option value="双性">双性</option>
+            </select>
+          </label>
+          <label class="identity-field">
+            <span>班级</span>
+            <input id="identityClass" autocomplete="off" />
+          </label>
+          <label class="identity-field">
+            <span>个人信息</span>
+            <textarea id="identityInfo"></textarea>
+          </label>
+          <label class="identity-field">
+            <span>开场剧情</span>
+            <textarea
+              id="identityOpeningPlot"
+              placeholder="可选：填写想要的开场地点、人物、事件或气氛。留空则使用默认教室开场。"
+            ></textarea>
+          </label>
+        </div>
+        <section class="identity-perks" aria-label="开场选项">
+          <div class="identity-perks-title">开场选项</div>
+          <label class="identity-perk">
+            <input type="checkbox" data-opening-perk="scholarship" />
+            <span><strong>助学金</strong><small>开场持有零花钱变为 50,000 日元。</small></span>
+          </label>
+          <label class="identity-perk">
+            <input type="checkbox" data-opening-perk="lucky" />
+            <span><strong>幸运</strong><small>开场 MC能量上限变为 100。</small></span>
+          </label>
+        </section>
+        <div class="identity-actions">
+          <button class="identity-button" type="button" id="identityFillUser">用当前 user 填充</button>
+          <button class="identity-button" type="button" id="identityReset">恢复默认</button>
+        </div>
+        <footer class="identity-footer">
+          <div class="identity-status" id="identityStatus">未选择身份</div>
+          <button class="identity-button primary" type="button" id="identitySelect">选择此身份</button>
+        </footer>
+      </section>
+    </div>
+  </section>
+</main>
+
+<script>
+  (() => {
+    const STORAGE_KEY = 'hypnoos.identity.cards.v2';
+    const DEFAULT_CLASS = '二年A组';
+    const DEFAULT_GENDER = '女';
+    function defaultAssetBase() {
+      try {
+        return new URL('assets/', window.location.href).href;
+      } catch {}
+      return '/public/frontends/hypnosis-app/assets/';
+    }
+
+    const ASSET_BASE = window.__ST_HYPNOOS_ASSET_BASE__ || defaultAssetBase();
+
+    function assetUrl(path) {
+      const value = String(path || '');
+      if (/^(?:https?:|data:|blob:)/i.test(value)) return value;
+      return ASSET_BASE.replace(/\/?$/, '/') + value.replace(/^\/+/, '');
+    }
+
+    function normalizeGender(value) {
+      const text = String(value || '').trim();
+      if (text === '男' || text === '男性') return '男';
+      if (text === '双性') return '双性';
+      return DEFAULT_GENDER;
+    }
+
+    function genderLooksFemale(value) {
+      return normalizeGender(value) === '女';
+    }
+
+    function defaultPhotoForGender(value) {
+      return assetUrl(genderLooksFemale(value) ? 'identity/user-g.png' : 'identity/user.png');
+    }
+
+    function toggleDefaultPhoto(value) {
+      return String(value || '') === assetUrl('identity/user.png')
+        ? assetUrl('identity/user-g.png')
+        : assetUrl('identity/user.png');
+    }
+
+    function isDefaultIdentityPhoto(value) {
+      const photo = String(value || '');
+      return !photo || photo === assetUrl('identity/user.png') || photo === assetUrl('identity/user-g.png');
+    }
+
+    const rootEl = document.getElementById('identityRoot');
+    const htmlEl = document.documentElement;
+
+    function readIdentityViewportSize() {
+      const visual = window.visualViewport;
+      const width = Math.max(1, Math.round(visual?.width || window.innerWidth || htmlEl.clientWidth || 1));
+      const height = Math.max(360, Math.round(visual?.height || window.innerHeight || htmlEl.clientHeight || 640));
+      return { width, height };
+    }
+
+    function ensureIdentityPortRuntimeStyle() {
+      htmlEl.classList.add('st-hypnoos-identity-port');
+      let style = document.getElementById('st-hypnoos-identity-port-runtime-lock-style');
+      if (!style) {
+        style = document.createElement('style');
+        style.id = 'st-hypnoos-identity-port-runtime-lock-style';
+        document.head.appendChild(style);
+      } else if (style.parentElement !== document.head) {
+        document.head.appendChild(style);
+      }
+      style.textContent = [
+        'html.st-hypnoos-identity-port{--st-identity-port-vh:100dvh;--st-identity-port-width:100vw;}',
+        'html.st-hypnoos-identity-port,html.st-hypnoos-identity-port body{width:100%!important;min-width:0!important;max-width:100%!important;height:var(--st-identity-port-vh,100dvh)!important;min-height:0!important;max-height:var(--st-identity-port-vh,100dvh)!important;margin:0!important;padding:0!important;overflow:hidden!important;background:#3f2619!important;}',
+        'html.st-hypnoos-identity-port body{position:relative!important;touch-action:manipulation!important;overscroll-behavior:none!important;-webkit-text-size-adjust:100%;text-size-adjust:100%;}',
+        'html.st-hypnoos-identity-port #st-hypnoos-identity-frontend-host,html.st-hypnoos-identity-port #identityRoot{position:fixed!important;inset:0!important;z-index:2147483000!important;display:block!important;width:100vw!important;max-width:100vw!important;height:var(--st-identity-port-vh,100dvh)!important;min-height:0!important;max-height:var(--st-identity-port-vh,100dvh)!important;margin:0!important;padding:0!important;overflow:hidden!important;transform:none!important;clip-path:none!important;contain:none!important;}',
+        'html.st-hypnoos-identity-port .mes,html.st-hypnoos-identity-port .mes_block,html.st-hypnoos-identity-port .mes_text{max-width:none!important;max-height:none!important;overflow:visible!important;contain:none!important;transform:none!important;}',
+      ].join('\n');
+    }
+
+    function syncIdentityPortViewport() {
+      const size = readIdentityViewportSize();
+      htmlEl.style.setProperty('--st-identity-port-vh', size.height + 'px');
+      htmlEl.style.setProperty('--st-identity-port-width', size.width + 'px');
+    }
+
+    function styleIdentityHost(host) {
+      if (!host || !host.style) return host;
+      const important = 'important';
+      host.style.setProperty('position', 'fixed', important);
+      host.style.setProperty('inset', '0', important);
+      host.style.setProperty('z-index', '2147483000', important);
+      host.style.setProperty('width', '100vw', important);
+      host.style.setProperty('max-width', '100vw', important);
+      host.style.setProperty('height', 'var(--st-identity-port-vh, 100dvh)', important);
+      host.style.setProperty('min-height', '0', important);
+      host.style.setProperty('max-height', 'var(--st-identity-port-vh, 100dvh)', important);
+      host.style.setProperty('margin', '0', important);
+      host.style.setProperty('padding', '0', important);
+      host.style.setProperty('overflow', 'hidden', important);
+      host.style.setProperty('display', 'block', important);
+      host.style.setProperty('transform', 'none', important);
+      host.style.setProperty('clip-path', 'none', important);
+      host.style.setProperty('contain', 'none', important);
+      return host;
+    }
+
+    function styleIdentityRoot(root) {
+      if (!root || !root.style) return root;
+      const important = 'important';
+      root.style.setProperty('position', 'fixed', important);
+      root.style.setProperty('inset', '0', important);
+      root.style.setProperty('z-index', '2147483000', important);
+      root.style.setProperty('width', '100vw', important);
+      root.style.setProperty('max-width', '100vw', important);
+      root.style.setProperty('height', 'var(--st-identity-port-vh, 100dvh)', important);
+      root.style.setProperty('min-height', '0', important);
+      root.style.setProperty('max-height', 'var(--st-identity-port-vh, 100dvh)', important);
+      root.style.setProperty('margin', '0', important);
+      root.style.setProperty('padding', '0', important);
+      root.style.setProperty('overflow', 'hidden', important);
+      root.style.setProperty('transform', 'none', important);
+      root.style.setProperty('clip-path', 'none', important);
+      root.style.setProperty('contain', 'none', important);
+      return root;
+    }
+
+    function mountIdentityRoot() {
+      if (!rootEl || !document.body) return;
+      ensureIdentityPortRuntimeStyle();
+      syncIdentityPortViewport();
+      let host = document.getElementById('st-hypnoos-identity-frontend-host');
+      if (!host) {
+        host = document.createElement('div');
+        host.id = 'st-hypnoos-identity-frontend-host';
+        document.body.appendChild(host);
+      } else if (host.parentElement !== document.body) {
+        document.body.appendChild(host);
+      }
+      styleIdentityHost(host);
+      if (rootEl.parentElement !== host) host.appendChild(rootEl);
+      styleIdentityRoot(rootEl);
+    }
+
+    mountIdentityRoot();
+    window.addEventListener('resize', mountIdentityRoot);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', mountIdentityRoot);
+      window.visualViewport.addEventListener('scroll', mountIdentityRoot);
+    }
+    try {
+      new MutationObserver(() => {
+        window.requestAnimationFrame(mountIdentityRoot);
+      }).observe(document.body, { childList: true });
+    } catch {}
+    window.setTimeout(mountIdentityRoot, 0);
+    window.setTimeout(mountIdentityRoot, 250);
+    window.setTimeout(mountIdentityRoot, 1000);
+    const defaultCards = () => [
+      {
+        id: 'easy',
+        title: '一',
+        name: '',
+        age: '17',
+        gender: DEFAULT_GENDER,
+        className: DEFAULT_CLASS,
+        photo: defaultPhotoForGender(DEFAULT_GENDER),
+        info: '贫困家庭出身的特优生，凭压倒性成绩考入私立斋明学园；学力足以站稳脚跟，但与贵族学生存在巨大的阶层差异。自卑敏感，老土的眼镜和常年乱糟糟的头发是TA 的标志。意外的是是遮挡下的脸居然白皙漂亮…？',
+        openingPlot: '',
+      },
+    ];
+
+    const $ = selector => document.querySelector(selector);
+    const detailScreenEl = $('#identityDetailScreen');
+    const noticeLayerEl = $('#identityNoticeLayer');
+    const statusEl = $('#identityStatus');
+    const photoPreviewEl = $('#identityPhotoPreview');
+    const fields = {
+      name: $('#identityName'),
+      age: $('#identityAge'),
+      gender: $('#identityGender'),
+      className: $('#identityClass'),
+      info: $('#identityInfo'),
+      openingPlot: $('#identityOpeningPlot'),
+    };
+    const OPENING_PERKS = [
+      { id: 'scholarship', label: '助学金', key: '持有零花钱', value: 50000 },
+      { id: 'lucky', label: '幸运', key: 'MC能量上限', value: 100 },
+    ];
+
+    let cards = loadCards();
+    let selectedId = cards[0]?.id || 'easy';
+    let detailOpen = true;
+    let saving = false;
+
+    function setStatus(message) {
+      statusEl.textContent = String(message || '');
+    }
+
+    function openIdentityNotice() {
+      if (noticeLayerEl) noticeLayerEl.hidden = false;
+    }
+
+    function closeIdentityNotice() {
+      if (noticeLayerEl) noticeLayerEl.hidden = true;
+    }
+
+    function loadCards() {
+      const defaults = defaultCards();
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        if (!Array.isArray(saved)) return defaults;
+        return defaults.map(card => {
+          const match = saved.find(item => item?.id === card.id);
+          const merged =
+            match && typeof match === 'object' ? { ...card, ...match, id: card.id, title: card.title } : card;
+          const gender = normalizeGender(merged.gender);
+          return {
+            ...merged,
+            gender,
+            photo: isDefaultIdentityPhoto(merged.photo) ? defaultPhotoForGender(gender) : merged.photo,
+          };
+        });
+      } catch {
+        return defaults;
+      }
+    }
+
+    function saveCards() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+      } catch (err) {
+        console.warn('[HypnoOS Identity] localStorage save failed', err);
+        setStatus('身份草稿保存失败：浏览器存储空间不足。');
+      }
+    }
+
+    function selectedCard() {
+      return cards.find(card => card.id === selectedId) || cards[0];
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;');
+    }
+
+    function renderPhoto(card) {
+      const photo = String(card.photo || '');
+      photoPreviewEl.innerHTML = photo ? '<img alt="" src="' + escapeHtml(photo) + '">' : '<span>照片为空</span>';
+    }
+
+    function renderForm() {
+      const card = selectedCard();
+      const index = Math.max(
+        0,
+        cards.findIndex(item => item.id === card.id),
+      );
+      fields.name.value = card.name || '';
+      fields.age.value = card.age || '';
+      fields.gender.value = normalizeGender(card.gender);
+      fields.className.value = card.className || DEFAULT_CLASS;
+      fields.info.value = card.info || '';
+      fields.openingPlot.value = card.openingPlot || '';
+      $('#identityFillUser').classList.toggle('identity-hidden', card.id !== 'custom');
+      renderPhoto(card);
+      renderOpeningPerks();
+    }
+
+    function render() {
+      if (detailOpen) renderForm();
+    }
+
+    function showDetail() {
+      detailOpen = true;
+      if (detailScreenEl) detailScreenEl.hidden = false;
+      render();
+      renderForm();
+    }
+
+    function updateSelectedCard(patch) {
+      cards = cards.map(card => (card.id === selectedId ? { ...card, ...patch } : card));
+      saveCards();
+      renderForm();
+    }
+
+    for (const [key, input] of Object.entries(fields)) {
+      const eventName = key === 'gender' ? 'change' : 'input';
+      input.addEventListener(eventName, () => {
+        if (key === 'gender') {
+          const card = selectedCard();
+          const gender = normalizeGender(input.value);
+          updateSelectedCard({
+            gender,
+            ...(isDefaultIdentityPhoto(card.photo) ? { photo: defaultPhotoForGender(gender) } : {}),
+          });
+          return;
+        }
+        updateSelectedCard({ [key]: input.value });
+      });
+    }
+
+    $('#identityNoticeToggle')?.addEventListener('click', openIdentityNotice);
+    $('#identityNoticeClose')?.addEventListener('click', closeIdentityNotice);
+    noticeLayerEl?.addEventListener('click', event => {
+      if (event.target === noticeLayerEl) closeIdentityNotice();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && noticeLayerEl && !noticeLayerEl.hidden) closeIdentityNotice();
+    });
+    $('#identityUpload').addEventListener('click', () => $('#identityPhotoInput').click());
+    $('#identityToggleDefaultPhoto').addEventListener('click', () => {
+      updateSelectedCard({ photo: toggleDefaultPhoto(selectedCard().photo) });
+      setStatus('已切换默认头像。');
+    });
+    $('#identityClearPhoto').addEventListener('click', () => {
+      updateSelectedCard({ photo: '' });
+      renderPhoto(selectedCard());
+    });
+    $('#identityReset').addEventListener('click', () => {
+      const defaults = defaultCards();
+      const original = defaults.find(card => card.id === selectedId);
+      if (!original) return;
+      cards = cards.map(card => (card.id === selectedId ? { ...original } : card));
+      saveCards();
+      render();
+      setStatus('已恢复当前学生证默认内容。');
+    });
+    $('#identityFillUser').addEventListener('click', () => {
+      const name = readCurrentUserName();
+      if (!name) {
+        setStatus('未读取到当前 SillyTavern user 名称。');
+        return;
+      }
+      updateSelectedCard({ name });
+      renderForm();
+      setStatus('已读取当前 user 名称。');
+    });
+    $('#identityPhotoInput').addEventListener('change', async event => {
+      const file = event.target.files?.[0];
+      event.target.value = '';
+      if (!file) return;
+      try {
+        const photo = await resizeImageFile(file);
+        updateSelectedCard({ photo });
+        renderPhoto(selectedCard());
+        setStatus('照片已更新。');
+      } catch (err) {
+        console.warn('[HypnoOS Identity] photo resize failed', err);
+        setStatus('照片处理失败。');
+      }
+    });
+
+    function candidateWindows() {
+      const result = [];
+      for (const candidate of [window, window.parent, window.top]) {
+        try {
+          if (candidate && !result.includes(candidate)) result.push(candidate);
+        } catch {}
+      }
+      return result;
+    }
+
+    function readContext(win) {
+      try {
+        return win.SillyTavern?.getContext?.() || win.getContext?.() || null;
+      } catch {
+        return null;
+      }
+    }
+
+    function readCurrentUserName() {
+      for (const win of candidateWindows()) {
+        const context = readContext(win);
+        const values = [
+          context?.name1,
+          context?.userName,
+          context?.user?.name,
+          context?.persona?.name,
+          win.name1,
+          win.userName,
+        ];
+        try {
+          values.push(win.document?.querySelector?.('#your_name')?.value);
+        } catch {}
+        for (const value of values) {
+          const text = String(value || '').trim();
+          if (text) return text;
+        }
+      }
+      return '';
+    }
+
+    function readCurrentMessageOption(win) {
+      try {
+        const id = win.getCurrentMessageId?.();
+        if (id !== undefined && id !== null && id !== 'latest') return { type: 'message', message_id: id };
+      } catch {}
+      return { type: 'message', message_id: 'latest' };
+    }
+
+    function variableOptions(win) {
+      const options = [
+        readCurrentMessageOption(win),
+        { type: 'message', message_id: 'latest' },
+        { type: 'chat' },
+        undefined,
+      ];
+      const seen = new Set();
+      return options.filter(option => {
+        const key = option ? String(option.type || '') + ':' + String(option.message_id ?? '') : 'undefined';
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
+    function scoreStatData(value) {
+      const root = value?.stat_data && typeof value.stat_data === 'object' ? value.stat_data : value;
+      if (!root || typeof root !== 'object' || Array.isArray(root)) return -1;
+      let score = 0;
+      const system = root['系统'];
+      if (system && typeof system === 'object' && !Array.isArray(system)) {
+        score += 30;
+        for (const key of ['MC能量', 'MC能量上限', '持有零花钱', '当前时间', '当前日期']) {
+          if (system[key] !== undefined) score += 5;
+        }
+      }
+      if (root['角色'] && typeof root['角色'] === 'object') score += 20;
+      return score;
+    }
+
+    function currentMvuData() {
+      const candidates = [];
+      for (const win of candidateWindows()) {
+        for (const option of variableOptions(win)) {
+          try {
+            if (win.Mvu?.getMvuData && win.Mvu?.replaceMvuData) {
+              const mvu = option === undefined ? win.Mvu.getMvuData() : win.Mvu.getMvuData(option);
+              if (mvu && typeof mvu.then !== 'function') {
+                const stat = mvu?.stat_data && typeof mvu.stat_data === 'object' ? mvu.stat_data : mvu;
+                const score = scoreStatData(stat);
+                if (score >= 0)
+                  candidates.push({
+                    mvu,
+                    stat,
+                    option,
+                    replace: (next, opt) => win.Mvu.replaceMvuData(next, opt),
+                    score: score + 20,
+                  });
+              }
+            }
+          } catch {}
+          try {
+            if (typeof win.getVariables === 'function' && typeof win.updateVariablesWith === 'function') {
+              const vars = option === undefined ? win.getVariables() : win.getVariables(option);
+              const stat = vars?.stat_data && typeof vars.stat_data === 'object' ? vars.stat_data : vars;
+              const score = scoreStatData(stat);
+              if (score >= 0) {
+                candidates.push({
+                  mvu: vars,
+                  stat,
+                  option,
+                  replace: () =>
+                    win.updateVariablesWith(current => {
+                      if (current?.stat_data && typeof current.stat_data === 'object') {
+                        current.stat_data = stat;
+                        return current;
+                      }
+                      return stat;
+                    }, option),
+                  score,
+                });
+              }
+            }
+          } catch {}
+        }
+      }
+      candidates.sort((a, b) => b.score - a.score);
+      return candidates[0] || null;
+    }
+
+    async function replaceMvuData(data) {
+      if (!data?.replace) return false;
+      const result = data.replace(data.mvu, data.option);
+      if (result && typeof result.then === 'function') await result;
+      return true;
+    }
+
+    async function writeIdentityVariable(identity) {
+      const data = currentMvuData();
+      if (!data) return false;
+      data.stat['系统'] =
+        data.stat['系统'] && typeof data.stat['系统'] === 'object' && !Array.isArray(data.stat['系统'])
+          ? data.stat['系统']
+          : {};
+      data.stat['系统']['user身份'] = identity;
+      await replaceMvuData(data);
+      return true;
+    }
+
+    function selectedIdentityPayload() {
+      const card = selectedCard();
+      const perks = activeOpeningPerks();
+      return {
+        模板ID: card.id,
+        姓名: String(card.name || '').trim(),
+        年龄: String(card.age || '').trim(),
+        性别: normalizeGender(card.gender),
+        班级: String(card.className || '').trim() || DEFAULT_CLASS,
+        个人信息: String(card.info || '').trim(),
+        照片: String(card.photo || ''),
+        来源: '首楼学生证',
+        已选择: true,
+        ...(perks.length
+          ? {
+              开场选项: perks.map(perk => perk.label).join('、'),
+              开场选项说明: '已由首楼前端直接写入变量，AI不得二次发放或回退。',
+            }
+          : {}),
+      };
+    }
+
+    function identityStorageScope() {
+      const chatScopes = [];
+      for (const win of candidateWindows()) {
+        try {
+          const providedScope = String(win?.__ST_HYPNOOS_CHAT_STORAGE_SCOPE__?.() || '').trim();
+          if (providedScope && providedScope !== 'global' && providedScope !== 'session')
+            chatScopes.push(providedScope);
+          const context = readContext(win);
+          chatScopes.push(
+            win?.getCurrentChatId?.(),
+            win?.chatId,
+            context?.chatId,
+            context?.chat_id,
+            context?.chatFile,
+            context?.chat_file,
+            context?.chat?.id,
+            context?.chat?.file_name,
+            context?.chatMetadata?.chat_id,
+            context?.chatMetadata?.file_name,
+            context?.chatMetadata?.filename,
+          );
+        } catch {}
+      }
+      for (const value of chatScopes) {
+        const text = String(value ?? '').trim();
+        if (!text || text === 'latest') continue;
+        return text.replace(/[^\w\-.:@]/g, '_').slice(0, 120);
+      }
+      const transient = String(window.__ST_HYPNOOS_IDENTITY_TRANSIENT_SCOPE__ || '').trim();
+      return transient || 'identity-transient:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2);
+    }
+
+    function identityStorageKey(prefix) {
+      return prefix + identityStorageScope();
+    }
+
+    try {
+      localStorage.removeItem('hypnoos.identity.completed.v1:global');
+    } catch {}
+
+    function openingPerkStateKey() {
+      return identityStorageKey('hypnoos.identity.openingPerks.v1:');
+    }
+
+    function openingPerkOriginalKey() {
+      return identityStorageKey('hypnoos.identity.openingPerkOriginals.v1:');
+    }
+
+    function readOpeningPerkIds() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(openingPerkStateKey()) || '[]');
+        return Array.isArray(parsed) ? parsed.map(id => String(id || '')).filter(Boolean) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function writeOpeningPerkIds(ids) {
+      try {
+        localStorage.setItem(openingPerkStateKey(), JSON.stringify(Array.from(new Set(ids)).filter(Boolean)));
+      } catch {}
+    }
+
+    function readOpeningPerkOriginals() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(openingPerkOriginalKey()) || '{}');
+        return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function writeOpeningPerkOriginals(originals) {
+      try {
+        localStorage.setItem(
+          openingPerkOriginalKey(),
+          JSON.stringify(originals && typeof originals === 'object' ? originals : {}),
+        );
+      } catch {}
+    }
+
+    function openingPerkById(id) {
+      return OPENING_PERKS.find(perk => perk.id === id) || null;
+    }
+
+    function activeOpeningPerks() {
+      const ids = new Set(readOpeningPerkIds());
+      return OPENING_PERKS.filter(perk => ids.has(perk.id));
+    }
+
+    function renderOpeningPerks() {
+      const ids = new Set(readOpeningPerkIds());
+      document.querySelectorAll('[data-opening-perk]').forEach(input => {
+        input.checked = ids.has(String(input.dataset.openingPerk || ''));
+      });
+    }
+
+    async function applyOpeningPerk(perk, checked) {
+      const data = currentMvuData();
+      if (!data) return false;
+      data.stat['系统'] =
+        data.stat['系统'] && typeof data.stat['系统'] === 'object' && !Array.isArray(data.stat['系统'])
+          ? data.stat['系统']
+          : {};
+      const system = data.stat['系统'];
+      const originals = readOpeningPerkOriginals();
+      if (checked) {
+        if (!originals[perk.id]) {
+          originals[perk.id] = {
+            key: perk.key,
+            exists: Object.prototype.hasOwnProperty.call(system, perk.key),
+            value: system[perk.key],
+          };
+        }
+        system[perk.key] = perk.value;
+      } else {
+        const original = originals[perk.id];
+        if (original) {
+          if (original.exists) system[perk.key] = original.value;
+          else delete system[perk.key];
+          delete originals[perk.id];
+        }
+      }
+      await replaceMvuData(data);
+      writeOpeningPerkOriginals(originals);
+      const ids = new Set(readOpeningPerkIds());
+      if (checked) ids.add(perk.id);
+      else ids.delete(perk.id);
+      writeOpeningPerkIds(Array.from(ids));
+      renderOpeningPerks();
+      return true;
+    }
+
+    function identityValue(value, fallback = '未填写') {
+      const text = String(value ?? '').trim();
+      return text || fallback;
+    }
+
+    function buildOpeningPrompt(identity, openingPlot = '') {
+      const customOpeningPlot = identityValue(openingPlot, '');
+      return [
+        '<首楼身份选择完成>',
+        'user身份:',
+        '- 姓名: ' + identityValue(identity['姓名']),
+        '- 年龄: ' + identityValue(identity['年龄']),
+        '- 性别: ' + normalizeGender(identity['性别']),
+        '- 班级: ' + identityValue(identity['班级'], DEFAULT_CLASS),
+        '- 个人信息: ' + identityValue(identity['个人信息']),
+        customOpeningPlot ? '- 自定义开场剧情: ' + customOpeningPlot : '',
+        identity['开场选项']
+          ? '- 开场选项: ' + identityValue(identity['开场选项']) + '（已由首楼前端直接写入变量，AI不得二次发放或回退）'
+          : '',
+        '- 固定角色来源: 西园寺爱丽莎、月咏深雪、犬冢夏美、阿宅、神宫寺怜央、桐生晴也、月城朔、白鸟夜、久世真澄的变量和人设读取角色卡世界书；首楼不创建聊天世界书。',
+        '</首楼身份选择完成>',
+        '',
+        customOpeningPlot
+          ? '请按“自定义开场剧情”开始正文，并优先承接其中的地点、人物、事件和气氛；若自定义内容没有写明当前时间、日期或地点，则默认当前时间12:30，午休前最后一节课（4限现代文）刚下课，地点为二年A组教室。固定角色可按自定义剧情需要自然出场或被提及；久世真澄是隐藏校外角色，不在普通课堂开场主动登场，除非自定义剧情明确需要。请根据上面的user身份形象做出不同第一反应；不要重新展示身份选择界面，不要用/add或add路径新增角色变量，不要重复输出变量初始化。'
+          : '请从固定开场开始正文：当前时间12:30，午休前最后一节课（4限现代文）刚下课，地点为二年A组教室。请随机安排固定角色出场，可按校园日常被提及或自然登场；久世真澄是隐藏校外角色，不在普通课堂开场主动登场。请根据上面的user身份形象做出不同第一反应；不要重新展示身份选择界面，不要用/add或add路径新增角色变量，不要重复输出变量初始化。',
+      ].join('\n');
+    }
+
+    function queueOpeningPrompt(prompt) {
+      const payload = JSON.stringify({ prompt: String(prompt || ''), createdAt: Date.now() });
+      try {
+        localStorage.setItem(identityStorageKey('hypnoos.identity.pendingPrompt.v1:'), payload);
+        return true;
+      } catch {
+        try {
+          localStorage.setItem('hypnoos.identity.pendingPrompt.v1:global', payload);
+          return true;
+        } catch {}
+      }
+      return false;
+    }
+
+    function clearQueuedOpeningPrompt() {
+      for (const key of [
+        identityStorageKey('hypnoos.identity.pendingPrompt.v1:'),
+        'hypnoos.identity.pendingPrompt.v1:global',
+      ]) {
+        try {
+          localStorage.removeItem(key);
+        } catch {}
+      }
+    }
+
+    function markIdentityCompleted() {
+      try {
+        localStorage.setItem(identityStorageKey('hypnoos.identity.completed.v1:'), '1');
+      } catch {}
+    }
+
+    function findSendInput() {
+      const docs = [];
+      for (const win of candidateWindows()) {
+        try {
+          const doc = win?.document;
+          if (doc && !docs.includes(doc)) docs.push(doc);
+        } catch {}
+      }
+      const selectors = [
+        '#send_textarea',
+        'textarea#send_textarea',
+        "textarea[name='send_textarea']",
+        "textarea[data-testid='send-textarea']",
+      ];
+      for (const doc of docs) {
+        for (const selector of selectors) {
+          try {
+            const input = doc.querySelector(selector);
+            if (input) return input;
+          } catch {}
+        }
+      }
+      return null;
+    }
+
+    function findSendButton(input) {
+      const docs = [];
+      try {
+        if (input?.ownerDocument) docs.push(input.ownerDocument);
+      } catch {}
+      for (const win of candidateWindows()) {
+        try {
+          const doc = win?.document;
+          if (doc && !docs.includes(doc)) docs.push(doc);
+        } catch {}
+      }
+      const selectors = [
+        '#send_but',
+        'button#send_but',
+        "[data-testid='send-button']",
+        "button[data-testid='send-button']",
+        "button[aria-label='Send']",
+        "button[title='Send']",
+        '.send_but',
+      ];
+      for (const doc of docs) {
+        for (const selector of selectors) {
+          try {
+            const button = doc.querySelector(selector);
+            if (button) return button;
+          } catch {}
+        }
+      }
+      return null;
+    }
+
+    function writePromptToInput(prompt) {
+      const input = findSendInput();
+      if (!input) return null;
+      if ('value' in input) input.value = prompt;
+      else input.textContent = prompt;
+      try {
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      } catch {}
+      try {
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      } catch {}
+      try {
+        input.focus();
+      } catch {}
+      return input;
+    }
+
+    function clearPromptInput(input, prompt) {
+      if (!input) return;
+      const current = 'value' in input ? input.value : input.textContent;
+      if (String(current || '') !== String(prompt || '')) return;
+      if ('value' in input) input.value = '';
+      else input.textContent = '';
+      try {
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      } catch {}
+      try {
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      } catch {}
+    }
+
+    function submitPrompt(prompt) {
+      const input = writePromptToInput(prompt);
+      if (!input) return false;
+      const button = findSendButton(input);
+      if (button && !button.disabled && button.getAttribute('aria-disabled') !== 'true') {
+        try {
+          button.click();
+          return true;
+        } catch {}
+      }
+      clearPromptInput(input, prompt);
+      return false;
+    }
+
+    function finishIdentitySelection(prompt) {
+      const sentPrompt = submitPrompt(prompt);
+      if (sentPrompt) {
+        clearQueuedOpeningPrompt();
+        markIdentityCompleted();
+      } else {
+        queueOpeningPrompt(prompt);
+      }
+      if (rootEl) {
+        rootEl.innerHTML =
+          '<section class="identity-complete-screen" style="display:grid;place-items:center;padding:24px;text-align:center"><div style="max-width:520px;border:1px solid rgba(255,248,234,.42);border-radius:10px;background:rgba(40,24,14,.86);box-shadow:0 18px 45px rgba(0,0,0,.34);padding:18px 20px;color:#fff8ea;font:800 15px/1.6 -apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans SC,sans-serif"><div style="font-size:20px;margin-bottom:6px">身份已写入</div><div style="opacity:.86">' +
+          (sentPrompt ? '正在发送开场提示词。' : '正在等待外层聊天界面发送开场提示词。') +
+          '</div></div></section>';
+      }
+      window.setTimeout(() => {
+        try {
+          window.location.reload();
+        } catch {}
+      }, 520);
+    }
+
+    $('#identitySelect').addEventListener('click', async () => {
+      if (saving) return;
+      saving = true;
+      const button = $('#identitySelect');
+      button.disabled = true;
+      setStatus('正在写入身份...');
+      try {
+        const identity = selectedIdentityPayload();
+        const wroteIdentity = await writeIdentityVariable(identity);
+        if (wroteIdentity) {
+          setStatus('身份已写入。');
+          finishIdentitySelection(buildOpeningPrompt(identity, selectedCard().openingPlot));
+        } else {
+          setStatus('写入失败：MVU变量接口不可用。');
+        }
+      } catch (err) {
+        console.error('[HypnoOS Identity] select failed', err);
+        setStatus('写入失败，请查看控制台。');
+      } finally {
+        saving = false;
+        button.disabled = false;
+      }
+    });
+
+    document.querySelectorAll('[data-opening-perk]').forEach(input => {
+      input.addEventListener('change', async () => {
+        const perk = openingPerkById(input.dataset.openingPerk || '');
+        if (!perk) return;
+        input.disabled = true;
+        try {
+          const ok = await applyOpeningPerk(perk, input.checked);
+          if (ok) {
+            setStatus((input.checked ? '已应用开场选项：' : '已取消开场选项：') + perk.label);
+          } else {
+            input.checked = !input.checked;
+            setStatus('写入失败：MVU变量接口不可用。');
+          }
+        } catch (err) {
+          console.error('[HypnoOS Identity] opening perk failed', err);
+          input.checked = !input.checked;
+          setStatus('开场选项写入失败，请查看控制台。');
+        } finally {
+          input.disabled = false;
+        }
+      });
+    });
+
+    function resizeImageFile(file) {
+      return new Promise((resolve, reject) => {
+        if (!/^image\//i.test(file.type || '')) {
+          reject(new Error('not image'));
+          return;
+        }
+        const reader = new FileReader();
+        reader.onerror = () => reject(reader.error || new Error('read failed'));
+        reader.onload = () => {
+          const img = new Image();
+          img.onerror = () => reject(new Error('image decode failed'));
+          img.onload = () => {
+            const maxSize = 640;
+            const scale = Math.min(1, maxSize / Math.max(img.naturalWidth || 1, img.naturalHeight || 1));
+            const width = Math.max(1, Math.round((img.naturalWidth || 1) * scale));
+            const height = Math.max(1, Math.round((img.naturalHeight || 1) * scale));
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', 0.82));
+          };
+          img.src = String(reader.result || '');
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    showDetail();
+  })();
+</script>

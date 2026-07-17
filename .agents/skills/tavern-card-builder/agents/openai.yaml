@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tavern Card Builder"
+  short_description: "Build and debug SillyTavern rolecards"
+  default_prompt: "Use $tavern-card-builder to design, retrofit, or debug a SillyTavern rolecard with the right references loaded."
