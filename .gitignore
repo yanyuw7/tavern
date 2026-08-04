@@ -11,6 +11,7 @@ pnpm-debug.log*
 
 auto-imports.d.ts
 components.d.ts
+<<<<<<< HEAD
 
 src/backup/
 *.bak*
@@ -18,3 +19,5 @@ src/backup/
 HYPNOSIS_APP_CHANGELOG.md
 REMOTE_FRONTEND.md
 /ST开发指南DB
+=======
+>>>>>>> ffcef6e22b372e2f3dcc1048bf50073234505d74
